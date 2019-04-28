@@ -1,11 +1,9 @@
 package me.bactoria.boardProject.boards.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor
+@Builder @NoArgsConstructor @AllArgsConstructor
 public class SaveRequestBoardDto {
     private String title;
     private String content;
