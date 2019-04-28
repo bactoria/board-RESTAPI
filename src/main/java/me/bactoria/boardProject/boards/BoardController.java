@@ -2,14 +2,14 @@ package me.bactoria.boardProject.boards;
 
 import lombok.RequiredArgsConstructor;
 import me.bactoria.boardProject.boards.dto.SaveRequestBoardDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -25,5 +25,17 @@ public class BoardController {
         Board savedBoard = boardService.saveBoard(saveRequestBoardDto);
         URI createdUri = linkTo(BoardController.class).slash(savedBoard.getId()).toUri();
         return ResponseEntity.created(createdUri).build();
+    }
+
+    @GetMapping
+    public ResponseEntity getBoards(Pageable pageable) {
+        Page<Board> page = boardService.getBoards(pageable);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getBoards(@PathVariable Long id) {
+        Board board = boardService.getBoard(id);
+        return ResponseEntity.ok(board);
     }
 }
