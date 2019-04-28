@@ -2,6 +2,7 @@ package me.bactoria.boardProject.boards;
 
 import lombok.RequiredArgsConstructor;
 import me.bactoria.boardProject.boards.dto.SaveRequestBoardDto;
+import me.bactoria.boardProject.boards.dto.UpdateRequestBoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,16 @@ public class BoardService {
 
     public Board getBoard(Long id) {
         return boardRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Board updateBoard(Long id, UpdateRequestBoardDto updateRequestBoardDto) {
+        String title = updateRequestBoardDto.getTitle();
+        String content = updateRequestBoardDto.getContent();
+
+        Board board = boardRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        board.setTitle(title);
+        board.setContent(content);
+
+        return boardRepository.save(board);
     }
 }

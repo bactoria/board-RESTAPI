@@ -2,6 +2,7 @@ package me.bactoria.boardProject.boards;
 
 import lombok.RequiredArgsConstructor;
 import me.bactoria.boardProject.boards.dto.SaveRequestBoardDto;
+import me.bactoria.boardProject.boards.dto.UpdateRequestBoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -36,6 +36,12 @@ public class BoardController {
     @GetMapping("/{id}")
     public ResponseEntity getBoard(@PathVariable Long id) {
         Board board = boardService.getBoard(id);
+        return ResponseEntity.ok(board);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateBoard(@PathVariable Long id, @RequestBody UpdateRequestBoardDto updateRequestBoardDto) {
+        Board board = boardService.updateBoard(id, updateRequestBoardDto);
         return ResponseEntity.ok(board);
     }
 }
