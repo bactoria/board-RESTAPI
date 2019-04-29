@@ -1,4 +1,4 @@
-package me.bactoria.boardProject.boards.config;
+package me.bactoria.boardProject.config;
 
 import me.bactoria.boardProject.boards.BoardService;
 import me.bactoria.boardProject.boards.dto.SaveRequestBoardDto;

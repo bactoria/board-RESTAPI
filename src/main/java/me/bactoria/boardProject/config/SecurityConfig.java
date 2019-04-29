@@ -1,4 +1,4 @@
-package me.bactoria.boardProject.boards.config;
+package me.bactoria.boardProject.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
