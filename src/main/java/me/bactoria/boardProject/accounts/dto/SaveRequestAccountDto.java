@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder @NoArgsConstructor @AllArgsConstructor
 public class SaveRequestAccountDto {
-    private String id;
+    private String email;
     private String password;
     private String name;
     private String phone;
