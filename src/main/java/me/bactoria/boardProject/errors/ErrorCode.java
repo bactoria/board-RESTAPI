@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 
+    ACCOUNT_ALREADY_EXIST("A001", "Account가 이미 존재합니다.",400),
     BOARD_NOT_FOUND("B001", "해당 board가 존재하지 않습니다.",404),
     FORBIDDEN("B002", "해당 유저가 권한이 없습니다.",403);
 
