@@ -1,7 +1,9 @@
 package me.bactoria.boardProject.boards;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import me.bactoria.boardProject.accounts.Account;
+import me.bactoria.boardProject.accounts.AccountSerializer;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,5 +22,6 @@ public class Board {
     private LocalDateTime createdTime;
 
     @ManyToOne
+    @JsonSerialize(using = AccountSerializer.class)
     private Account account;
 }
