@@ -27,6 +27,7 @@ public class BoardController {
         return ResponseEntity.created(createdUri).build();
     }
 
+
     @GetMapping
     public ResponseEntity getBoards(Pageable pageable) {
         Page<Board> page = boardService.getBoards(pageable);
