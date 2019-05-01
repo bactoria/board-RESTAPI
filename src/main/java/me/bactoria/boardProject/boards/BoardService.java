@@ -45,7 +45,7 @@ public class BoardService {
 
         Board board = boardRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        ValidateAuthorization(currentUser, board.getAccount());
+        validateAuthorization(currentUser, board.getAccount());
 
         String title = updateRequestBoardDto.getTitle();
         String content = updateRequestBoardDto.getContent();
@@ -56,7 +56,7 @@ public class BoardService {
         return boardRepository.save(board);
     }
 
-    private void ValidateAuthorization(Account currentUser, Account account) {
+    private void validateAuthorization(Account currentUser, Account account) {
         if (!isEqualUser(currentUser, account)) {
             throw new UserDeniedAuthorizationException(currentUser.getId().toString());
         }
@@ -69,7 +69,7 @@ public class BoardService {
     public void deleteBoard(Long id, Account currentUser) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        ValidateAuthorization(currentUser, board.getAccount());
+        validateAuthorization(currentUser, board.getAccount());
 
         boardRepository.deleteById(id);
     }
