@@ -43,14 +43,17 @@ public class BoardController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateBoard(@PathVariable Long id, @RequestBody UpdateRequestBoardDto updateRequestBoardDto) {
-        Board board = boardService.updateBoard(id, updateRequestBoardDto);
+    public ResponseEntity updateBoard(@PathVariable Long id,
+                                      @RequestBody UpdateRequestBoardDto updateRequestBoardDto,
+                                      @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") Account currentUser) {
+        Board board = boardService.updateBoard(id, updateRequestBoardDto, currentUser);
         return ResponseEntity.ok(board);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteBoard(@PathVariable Long id) {
-        boardService.deleteBoard(id);
+    public ResponseEntity deleteBoard(@PathVariable Long id,
+                                      @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") Account currentUser) {
+        boardService.deleteBoard(id, currentUser);
         return ResponseEntity.noContent().build();
     }
 }
