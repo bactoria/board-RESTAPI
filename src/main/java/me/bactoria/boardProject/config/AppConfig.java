@@ -1,7 +1,7 @@
 package me.bactoria.boardProject.config;
 
-import me.bactoria.boardProject.boards.BoardService;
-import me.bactoria.boardProject.boards.dto.SaveRequestBoardDto;
+import me.bactoria.boardProject.accounts.AccountService;
+import me.bactoria.boardProject.accounts.dto.SaveRequestAccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import static java.util.stream.IntStream.rangeClosed;
 
 @Configuration
 public class AppConfig {
@@ -24,16 +22,21 @@ public class AppConfig {
     public ApplicationRunner applicationRunner() {
         return new ApplicationRunner() {
             @Autowired
-            BoardService boardService;
+            AccountService accountService;
 
             @Override
             public void run(ApplicationArguments args) throws Exception {
-                rangeClosed(1, 3)
-                        .mapToObj(i -> SaveRequestBoardDto.builder()
-                                .title("제목" + i)
-                                .content("내용" + i)
-                                .build())
-                        .forEach(boardService::saveBoard);
+                SaveRequestAccountDto dto1 = SaveRequestAccountDto.builder()
+                        .email("bactoria@gmail.com")
+                        .password("pass")
+                        .build();
+                accountService.saveAccount(dto1);
+
+                SaveRequestAccountDto dto2 = SaveRequestAccountDto.builder()
+                        .email("test@gmail.com")
+                        .password("pass")
+                        .build();
+                accountService.saveAccount(dto2);
             }
         };
     }

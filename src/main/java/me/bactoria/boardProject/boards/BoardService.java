@@ -1,6 +1,7 @@
 package me.bactoria.boardProject.boards;
 
 import lombok.RequiredArgsConstructor;
+import me.bactoria.boardProject.accounts.Account;
 import me.bactoria.boardProject.boards.dto.SaveRequestBoardDto;
 import me.bactoria.boardProject.boards.dto.UpdateRequestBoardDto;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public Board saveBoard(SaveRequestBoardDto saveRequestBoardDto) {
+    public Board saveBoard(SaveRequestBoardDto saveRequestBoardDto, Account currentUser) {
         String title = saveRequestBoardDto.getTitle();
         String content = saveRequestBoardDto.getContent();
         LocalDateTime createdTime = LocalDateTime.now();
@@ -25,6 +26,7 @@ public class BoardService {
                 .title(title)
                 .content(content)
                 .createdTime(createdTime)
+                .account(currentUser)
                 .build();
 
         return boardRepository.save(board);

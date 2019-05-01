@@ -1,12 +1,14 @@
 package me.bactoria.boardProject.boards;
 
 import lombok.RequiredArgsConstructor;
+import me.bactoria.boardProject.accounts.Account;
 import me.bactoria.boardProject.boards.dto.SaveRequestBoardDto;
 import me.bactoria.boardProject.boards.dto.UpdateRequestBoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -21,12 +23,12 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
-    public ResponseEntity saveBoard(@RequestBody SaveRequestBoardDto saveRequestBoardDto) {
-        Board savedBoard = boardService.saveBoard(saveRequestBoardDto);
+    public ResponseEntity saveBoard(@RequestBody SaveRequestBoardDto saveRequestBoardDto,
+                                    @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") Account currentUser) {
+        Board savedBoard = boardService.saveBoard(saveRequestBoardDto, currentUser);
         URI createdUri = linkTo(BoardController.class).slash(savedBoard.getId()).toUri();
         return ResponseEntity.created(createdUri).build();
     }
-
 
     @GetMapping
     public ResponseEntity getBoards(Pageable pageable) {
